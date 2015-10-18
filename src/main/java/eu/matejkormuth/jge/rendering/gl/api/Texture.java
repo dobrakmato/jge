@@ -26,17 +26,18 @@
  */
 package eu.matejkormuth.jge.rendering.gl.api;
 
-import eu.matejkormuth.jge.Disposable;
-import eu.matejkormuth.jge.rendering.gl.enums.FilterMode;
-import eu.matejkormuth.jge.rendering.gl.enums.Format;
-import eu.matejkormuth.jge.rendering.gl.enums.InternalFormat;
-import eu.matejkormuth.jge.rendering.gl.enums.WrapMode;
+import eu.matejkormuth.jge.filesystem.Resource;
+import eu.matejkormuth.jge.rendering.gl.enums.*;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.nio.ByteBuffer;
 
-public abstract class Texture implements Disposable {
+public abstract class Texture extends Resource implements GraphicResource {
 
-    public abstract void bind(int samplerSlot);
+    public abstract void activate(int samplerSlot);
+
+    public abstract void bind();
 
     public abstract void unbind();
 
@@ -45,7 +46,7 @@ public abstract class Texture implements Disposable {
      *
      * @param format The format
      */
-    public void setFormat(Format format) {
+    public void setFormat(@Nonnull Format format) {
         setFormat(format, null);
     }
 
@@ -54,7 +55,7 @@ public abstract class Texture implements Disposable {
      *
      * @param format The format
      */
-    public void setFormat(InternalFormat format) {
+    public void setFormat(@Nonnull InternalFormat format) {
         setFormat(format.getFormat(), format);
     }
 
@@ -64,7 +65,14 @@ public abstract class Texture implements Disposable {
      * @param format         The format
      * @param internalFormat The internal format
      */
-    public abstract void setFormat(Format format, InternalFormat internalFormat);
+    public abstract void setFormat(@Nonnull Format format, @Nonnull InternalFormat internalFormat);
+
+    /**
+     * Returns texture's type.
+     *
+     * @return the type
+     */
+    public abstract TextureType getType();
 
     /**
      * Returns the texture's format
@@ -93,7 +101,7 @@ public abstract class Texture implements Disposable {
      * @param horizontalWrap The horizontal wrap
      * @param verticalWrap   The vertical wrap
      */
-    public abstract void setWraps(WrapMode horizontalWrap, WrapMode verticalWrap);
+    public abstract void setWraps(@Nonnull WrapMode horizontalWrap, @Nonnull WrapMode verticalWrap);
 
     /**
      * Sets the texture's min and mag filters. The mag filter cannot require mipmap generation.
@@ -101,7 +109,7 @@ public abstract class Texture implements Disposable {
      * @param minFilter The min filter
      * @param magFilter The mag filter
      */
-    public abstract void setFilters(FilterMode minFilter, FilterMode magFilter);
+    public abstract void setFilters(@Nonnull FilterMode minFilter, @Nonnull FilterMode magFilter);
 
     /**
      * Sets the texture's image data.
@@ -110,7 +118,7 @@ public abstract class Texture implements Disposable {
      * @param width     The width of the image
      * @param height    the height of the image
      */
-    public abstract void setImageData(ByteBuffer imageData, int width, int height);
+    public abstract void setImageData(@Nonnull ByteBuffer imageData, int width, int height);
 
     /**
      * Returns the image data in the internal format.
@@ -127,7 +135,7 @@ public abstract class Texture implements Disposable {
      * @param format The format to return the data in
      * @return The image data in the desired format
      */
-    public abstract ByteBuffer getImageData(InternalFormat format);
+    public abstract ByteBuffer getImageData(@Nullable InternalFormat format);
 
     /**
      * Returns the width of the image.

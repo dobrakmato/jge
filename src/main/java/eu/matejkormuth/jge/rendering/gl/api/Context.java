@@ -30,13 +30,17 @@ import eu.matejkormuth.jge.Disposable;
 import eu.matejkormuth.jge.rendering.gl.enums.Capability;
 import eu.matejkormuth.jge.rendering.gl.enums.GLVersion;
 
+import javax.annotation.Nonnull;
+
 public abstract class Context implements Disposable {
 
     public abstract void create();
 
     public abstract GLVersion getGLVersion();
 
-    public abstract FrameBuffer createFramebuffer();
+    public abstract FrameBuffer createFrameBuffer();
+
+    public abstract RenderBuffer createRenderBuffer();
 
     public abstract Program createProgram();
 
@@ -46,8 +50,8 @@ public abstract class Context implements Disposable {
 
     public abstract VertexArray createVertexArray();
 
-    public abstract void enableCapability(Capability capability);
+    public abstract void enableCapability(@Nonnull Capability capability);
 
-    public abstract void disableCapability(Capability capability);
+    public abstract void disableCapability(@Nonnull Capability capability);
 
 }

@@ -26,9 +26,43 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.Collection;
 
-public interface ResourceLoader<T extends Resource> {
+public class LocalFileSystem implements FileSystem {
 
-    void loadInto(T resource, InputStream stream) throws Exception;
+    private final String root;
+
+    public LocalFileSystem(String root) {
+        this.root = root;
+    }
+
+    public String getRoot() {
+        return root;
+    }
+
+    @Override
+    public Path get(String path) {
+        return new Path(root, path);
+    }
+
+    @Override
+    public boolean exists(Path path) {
+        return Files.exists(path.toNIOPath());
+    }
+
+    @Override
+    public boolean isDirectory(Path path) {
+        return Files.isDirectory(path.toNIOPath());
+    }
+
+    @Override
+    public Collection<Path> getAllFiles(Path directory) {
+        return null;
+    }
+
+    @Override
+    public boolean isFile(Path path) {
+        return Files.isRegularFile(path.toNIOPath());
+    }
 }

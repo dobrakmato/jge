@@ -28,5 +28,15 @@ package eu.matejkormuth.jge;
 
 public interface Disposable {
 
+    /**
+     * Disposes this resource.
+     */
     void dispose();
+
+    /**
+     * Whether the resource was disposed or not.
+     *
+     * @return true if resource was disposed, else otherwise
+     */
+    boolean isDisposed();
 }

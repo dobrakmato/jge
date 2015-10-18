@@ -30,4 +30,19 @@ import eu.matejkormuth.jge.Disposable;
 
 public abstract class Resource implements Disposable {
 
+    protected boolean disposed = false;
+
+    @Override
+    public boolean isDisposed() {
+        return disposed;
+    }
+
+    @Override
+    public void dispose() {
+        if(disposed) {
+            throw new IllegalStateException("resource is already disposed!");
+        }
+
+        disposed = true;
+    }
 }

@@ -59,7 +59,7 @@ public enum FilterMode {
      *
      * @return Whether or not mipmaps are required
      */
-    public boolean needsMipMaps() {
+    public boolean needsMipmaps() {
         return mipmaps;
     }
 }

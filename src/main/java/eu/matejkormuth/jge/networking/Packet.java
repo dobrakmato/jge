@@ -24,11 +24,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.filesystem;
+package eu.matejkormuth.jge.networking;
 
-import java.io.InputStream;
+import io.netty.buffer.ByteBuf;
 
-public interface ResourceLoader<T extends Resource> {
+public abstract class Packet {
 
-    void loadInto(T resource, InputStream stream) throws Exception;
+    public abstract void read(ByteBuf byteBuf);
 }

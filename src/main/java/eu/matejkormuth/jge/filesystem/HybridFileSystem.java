@@ -26,9 +26,44 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
-import java.io.InputStream;
+import java.util.Collection;
 
-public interface ResourceLoader<T extends Resource> {
+public class HybridFileSystem implements FileSystem {
 
-    void loadInto(T resource, InputStream stream) throws Exception;
+    private final LocalFileSystem localCache;
+    private final RemoteFileSystem remote;
+
+    public HybridFileSystem(String localRoot, String remoteRoot) {
+        this.localCache = new LocalFileSystem(localRoot);
+        this.remote = new RemoteFileSystem(remoteRoot);
+    }
+
+    private boolean localExists(Path path) {
+        return localCache.exists(path);
+    }
+
+    @Override
+    public Path get(String path) {
+        return new Path(localCache.getRoot(), path);
+    }
+
+    @Override
+    public boolean exists(Path path) {
+        return localExists(path) || remote.exists(path);
+    }
+
+    @Override
+    public boolean isFile(Path path) {
+        return false;
+    }
+
+    @Override
+    public boolean isDirectory(Path path) {
+        return false;
+    }
+
+    @Override
+    public Collection<Path> getAllFiles(Path directory) {
+        return null;
+    }
 }

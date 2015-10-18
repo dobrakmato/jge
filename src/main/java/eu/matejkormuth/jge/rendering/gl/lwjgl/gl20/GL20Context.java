@@ -35,6 +35,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
+import javax.annotation.Nonnull;
+
 public class GL20Context extends Context {
 
     @Override
@@ -56,42 +58,52 @@ public class GL20Context extends Context {
     }
 
     @Override
-    public FrameBuffer createFramebuffer() {
-        return null;
+    public FrameBuffer createFrameBuffer() {
+        return new GL20FrameBuffer();
+    }
+
+    @Override
+    public RenderBuffer createRenderBuffer() {
+        return new GL20RenderBuffer();
     }
 
     @Override
     public Program createProgram() {
-        return null;
+        return new GL20Program();
     }
 
     @Override
     public Shader createShader() {
-        return null;
+        return new GL20Shader();
     }
 
     @Override
     public Texture createTexture() {
-        return null;
+        return new GL20Texture();
     }
 
     @Override
     public VertexArray createVertexArray() {
-        return null;
+        return new GL20VertexArray();
     }
 
     @Override
-    public void enableCapability(Capability capability) {
+    public void enableCapability(@Nonnull Capability capability) {
         GL11.glEnable(capability.getGLConstant());
     }
 
     @Override
-    public void disableCapability(Capability capability) {
+    public void disableCapability(@Nonnull Capability capability) {
         GL11.glDisable(capability.getGLConstant());
     }
 
     @Override
     public void dispose() {
         Display.destroy();
+    }
+
+    @Override
+    public boolean isDisposed() {
+        return !Display.isCreated();
     }
 }

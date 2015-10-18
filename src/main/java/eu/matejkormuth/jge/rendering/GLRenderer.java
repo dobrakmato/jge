@@ -24,11 +24,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.filesystem;
+package eu.matejkormuth.jge.rendering;
 
-import java.io.InputStream;
+import eu.matejkormuth.jge.rendering.gl.lwjgl.gl20.GL20Context;
 
-public interface ResourceLoader<T extends Resource> {
+public class GLRenderer implements Renderer {
 
-    void loadInto(T resource, InputStream stream) throws Exception;
+    private GL20Context gl;
+
+    @Override
+    public void create() {
+        gl = new GL20Context();
+    }
+
+    @Override
+    public void destroy() {
+        gl.dispose();
+    }
 }

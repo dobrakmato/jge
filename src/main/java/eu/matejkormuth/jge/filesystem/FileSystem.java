@@ -26,10 +26,17 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
-import javax.annotation.Nonnull;
+import java.util.Collection;
 
 public interface FileSystem {
 
-    Resource load(@Nonnull String path);
+    Path get(String path);
 
+    boolean exists(Path path);
+
+    boolean isFile(Path path);
+
+    boolean isDirectory(Path path);
+
+    Collection<Path> getAllFiles(Path directory);
 }

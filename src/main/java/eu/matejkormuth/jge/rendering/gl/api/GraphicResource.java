@@ -24,11 +24,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.filesystem;
+package eu.matejkormuth.jge.rendering.gl.api;
 
-import java.io.InputStream;
+import eu.matejkormuth.jge.Disposable;
+import eu.matejkormuth.jge.rendering.gl.enums.GLVersion;
 
-public interface ResourceLoader<T extends Resource> {
+public interface GraphicResource extends Disposable {
 
-    void loadInto(T resource, InputStream stream) throws Exception;
+    int getId();
+
+    GLVersion getVersion();
+
 }

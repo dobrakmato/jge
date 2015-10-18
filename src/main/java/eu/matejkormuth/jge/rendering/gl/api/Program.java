@@ -26,17 +26,46 @@
  */
 package eu.matejkormuth.jge.rendering.gl.api;
 
-import eu.matejkormuth.jge.Disposable;
+import org.lwjgl.util.vector.*;
 
-public abstract class Program implements Disposable {
+import javax.annotation.Nonnull;
+import java.util.Set;
 
-    public abstract void attach(Shader shader);
+public abstract class Program implements GraphicResource {
 
-    public abstract void detach(Shader shader);
+    public abstract void attach(@Nonnull Shader shader);
+
+    public abstract void detach(@Nonnull Shader shader);
 
     public abstract void link();
 
     public abstract void use();
 
+    public abstract Set<Shader> getShaders();
 
+    public abstract Set<String> getUniformNames();
+
+    public abstract void setUniform(String name, boolean b);
+
+    public abstract void setUniform(String name, int i);
+
+    public abstract void setUniform(String name, float f);
+
+    public abstract void setUniform(String name, float[] fs);
+
+    public abstract void setUniform(String name, Vector2f v);
+
+    public abstract void setUniform(String name, Vector2f[] vs);
+
+    public abstract void setUniform(String name, Vector3f v);
+
+    public abstract void setUniform(String name, Vector3f[] vs);
+
+    public abstract void setUniform(String name, Vector4f v);
+
+    public abstract void setUniform(String name, Matrix2f m);
+
+    public abstract void setUniform(String name, Matrix3f m);
+
+    public abstract void setUniform(String name, Matrix4f m);
 }

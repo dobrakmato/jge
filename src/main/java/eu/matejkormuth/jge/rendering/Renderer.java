@@ -27,4 +27,9 @@
 package eu.matejkormuth.jge.rendering;
 
 public interface Renderer {
+
+    void create();
+
+    void destroy();
+
 }

@@ -26,12 +26,13 @@
  */
 package eu.matejkormuth.jge.rendering.gl.api;
 
-import eu.matejkormuth.jge.Disposable;
 import eu.matejkormuth.jge.rendering.gl.enums.ShaderType;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
 
-public abstract class Shader implements Disposable {
+import javax.annotation.Nonnull;
+
+public abstract class Shader implements GraphicResource {
 
     /**
      * Returns the shader type.
@@ -65,7 +66,7 @@ public abstract class Shader implements Disposable {
      * @param attribute The name of the attribute
      * @param layout    The layout for the attribute
      */
-    public abstract void setAttributeLayout(String attribute, int layout);
+    public abstract void setAttributeLayout(@Nonnull String attribute, int layout);
 
     /**
      * Sets a texture layout.
@@ -73,6 +74,6 @@ public abstract class Shader implements Disposable {
      * @param unit    The unit for the sampler
      * @param sampler The sampler name
      */
-    public abstract void setTextureLayout(int unit, String sampler);
+    public abstract void setTextureLayout(int unit, @Nonnull String sampler);
 
 }

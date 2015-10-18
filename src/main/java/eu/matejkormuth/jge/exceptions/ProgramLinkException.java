@@ -24,11 +24,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.filesystem;
+package eu.matejkormuth.jge.exceptions;
 
-import java.io.InputStream;
+import org.lwjgl.opengl.OpenGLException;
 
-public interface ResourceLoader<T extends Resource> {
+/**
+ * Thrown when there was error while linking a program.
+ */
+public class ProgramLinkException extends OpenGLException {
 
-    void loadInto(T resource, InputStream stream) throws Exception;
+    public ProgramLinkException() {
+    }
+
+    public ProgramLinkException(String msg) {
+        super(msg);
+    }
 }

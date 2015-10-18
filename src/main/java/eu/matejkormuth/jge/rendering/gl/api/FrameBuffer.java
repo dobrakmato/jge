@@ -26,10 +26,11 @@
  */
 package eu.matejkormuth.jge.rendering.gl.api;
 
-import eu.matejkormuth.jge.Disposable;
 import eu.matejkormuth.jge.rendering.gl.enums.AttachmentPoint;
 
-public abstract class FrameBuffer implements Disposable {
+import javax.annotation.Nonnull;
+
+public abstract class FrameBuffer implements GraphicResource {
 
     public abstract void bind();
 
@@ -43,7 +44,7 @@ public abstract class FrameBuffer implements Disposable {
      * @param point The attachment point
      * @param texture The texture to attach
      */
-    public abstract void attach(AttachmentPoint point, Texture texture);
+    public abstract void attach(@Nonnull AttachmentPoint point, @Nonnull Texture texture);
 
     /**
      * Attaches the render buffer to the attachment point
@@ -51,12 +52,12 @@ public abstract class FrameBuffer implements Disposable {
      * @param point The attachment point
      * @param buffer The render buffer
      */
-    public abstract void attach(AttachmentPoint point, RenderBuffer buffer);
+    public abstract void attach(@Nonnull AttachmentPoint point, @Nonnull RenderBuffer buffer);
 
     /**
      * Detaches the texture or render buffer from the attachment point
      *
      * @param point The attachment point
      */
-    public abstract void detach(AttachmentPoint point);
+    public abstract void detach(@Nonnull AttachmentPoint point);
 }

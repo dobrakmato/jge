@@ -8,16 +8,25 @@
     <artifactId>anothegltry</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <finalName>${project.artifactId}-${project.version}.jar</finalName>
-        <main.class>eu.matejkormuth.game.client.Application</main.class>
-        <natives>${basedir}/target/natives/</natives>
-        <release.natives>natives/</release.natives>
-    </properties>
-
     <name>anothergltry</name>
     <description>Another GL try</description>
     <inceptionYear>2015</inceptionYear>
+
+    <properties>
+        <!-- Encoding of sources -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <finalName>${project.artifactId}-${project.version}.jar</finalName>
+        <!-- Main class name -->
+        <main.class>eu.matejkormuth.game.client.Application</main.class>
+        <!-- Natives directory -->
+        <natives>${basedir}/target/natives/</natives>
+        <!-- Natives release directory -->
+        <release.natives>natives/</release.natives>
+        <!-- Build properties -->
+        <build.unknown>UNKNOWN</build.unknown>
+        <build.number>${build.unknown}</build.number>
+        <build.revision>${build.unknown}</build.revision>
+    </properties>
 
     <dependencies>
         <!-- OpenGL / LWJGL -->
@@ -90,6 +99,16 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <plugins>
             <!-- Compile as 1.8 Java code. -->
             <plugin>
@@ -102,6 +121,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
             <!-- License plugin. -->
             <plugin>
                 <groupId>com.mycila</groupId>
@@ -120,6 +140,9 @@
                         <exclude>src/test/resources/**</exclude>
                         <exclude>src/main/resources/**</exclude>
                     </excludes>
+                    <mapping>
+                        <ps1>SCRIPT_STYLE</ps1>
+                    </mapping>
                 </configuration>
                 <executions>
                     <execution>
@@ -130,6 +153,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <!-- Get natives plugin. -->
             <plugin>
                 <groupId>com.googlecode.mavennatives</groupId>
@@ -145,6 +169,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Build great JAR. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -156,9 +182,16 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
+                        <manifestEntries>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Build-Number>${build.number}</Implementation-Build-Number>
+                            <Implementation-SCM-Revision>${build.revision}</Implementation-SCM-Revision>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
+
             <!-- Assembly the game. -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>

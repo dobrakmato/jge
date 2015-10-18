@@ -26,10 +26,11 @@
  */
 package eu.matejkormuth.jge.rendering.gl.api;
 
-import eu.matejkormuth.jge.Disposable;
 import eu.matejkormuth.jge.rendering.gl.enums.InternalFormat;
 
-public abstract class RenderBuffer implements Disposable {
+import javax.annotation.Nonnull;
+
+public abstract class RenderBuffer implements GraphicResource {
 
     /**
      * Sets the render buffer storage.
@@ -38,7 +39,7 @@ public abstract class RenderBuffer implements Disposable {
      * @param width  The width
      * @param height The height
      */
-    public abstract void setStorage(InternalFormat format, int width, int height);
+    public abstract void setStorage(@Nonnull InternalFormat format, int width, int height);
 
     /**
      * Returns the render buffer format.

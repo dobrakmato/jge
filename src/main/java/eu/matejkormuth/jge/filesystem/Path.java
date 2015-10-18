@@ -26,9 +26,36 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
-import java.io.InputStream;
+import java.nio.file.Paths;
+import java.util.regex.Pattern;
 
-public interface ResourceLoader<T extends Resource> {
+public class Path {
 
-    void loadInto(T resource, InputStream stream) throws Exception;
+    // Path separator.
+    private static final Pattern SEPARATOR = Pattern.compile(Pattern.quote("/"));
+
+    /**
+     * Physical location of resources direcotry root on client.
+     */
+    private final String root;
+
+    /**
+     * Abstract relative path according to resources root.
+     */
+    private final String relativePath;
+
+    Path(String root, String relativePath) {
+        this.root = root;
+        this.relativePath = relativePath;
+    }
+
+    // Cache nio path for better performance.
+    private java.nio.file.Path nioPath = null;
+
+    public java.nio.file.Path toNIOPath() {
+        if (nioPath == null) {
+            nioPath = Paths.get(root, relativePath);
+        }
+        return nioPath;
+    }
 }
