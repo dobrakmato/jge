@@ -26,5 +26,17 @@
  */
 package eu.matejkormuth.jge;
 
+import javax.annotation.Nonnull;
+import java.util.List;
+
 public interface GameObject {
+
+    void addComponent(@Nonnull GameComponent component);
+
+    void removeComponent(@Nonnull GameComponent component);
+
+    List<GameComponent> getComponents();
+
+    World getWorld();
+
 }

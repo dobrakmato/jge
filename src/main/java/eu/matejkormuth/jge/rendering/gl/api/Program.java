@@ -26,9 +26,9 @@
  */
 package eu.matejkormuth.jge.rendering.gl.api;
 
-import org.lwjgl.util.vector.*;
 
 import javax.annotation.Nonnull;
+import javax.vecmath.*;
 import java.util.Set;
 
 public abstract class Program implements GraphicResource {
@@ -62,8 +62,6 @@ public abstract class Program implements GraphicResource {
     public abstract void setUniform(String name, Vector3f[] vs);
 
     public abstract void setUniform(String name, Vector4f v);
-
-    public abstract void setUniform(String name, Matrix2f m);
 
     public abstract void setUniform(String name, Matrix3f m);
 

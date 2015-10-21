@@ -27,4 +27,13 @@
 package eu.matejkormuth.jge;
 
 public interface GameComponent {
+
+    void setObject(GameObject attachedTo);
+
+    GameObject getObject();
+
+    default World getWorld() {
+        return getObject().getWorld();
+    }
+
 }

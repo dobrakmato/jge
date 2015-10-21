@@ -26,10 +26,28 @@
  */
 package eu.matejkormuth.jge;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Bootstrap {
+
+    //private static final Logger log = LoggerFactory.getLogger(Bootstrap.class);
 
     public static void main(String[] args) {
         // Enable LWJGL debug.
         System.setProperty("org.lwjgl.util.Debug", "true");
+
+        // Check for leaks.
+        if (!MemoryUtil.allDisposed()) {
+            log.error("Some disposables were not correctly disposed!");
+
+            // Dispose undisposed.
+            MemoryUtil.undisposed()
+                    .stream()
+                    .forEach(disposable -> {
+                        log.error("Undisposed: {}", disposable);
+                        disposable.dispose();
+                    });
+        }
     }
 }

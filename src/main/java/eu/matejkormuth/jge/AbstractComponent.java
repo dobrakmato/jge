@@ -26,25 +26,16 @@
  */
 package eu.matejkormuth.jge;
 
-import com.bulletphysics.collision.broadphase.DbvtBroadphase;
-import com.bulletphysics.collision.dispatch.CollisionConfiguration;
-import com.bulletphysics.collision.dispatch.CollisionDispatcher;
-import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
-import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
-import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
+public abstract class AbstractComponent implements GameComponent {
 
-import javax.vecmath.Vector3f;
+    private GameObject object;
 
-public class World extends DiscreteDynamicsWorld {
-
-    private static CollisionConfiguration config = new DefaultCollisionConfiguration();
-
-    public World() {
-        super(new CollisionDispatcher(config),
-                new DbvtBroadphase(), new SequentialImpulseConstraintSolver(), config);
-
-        this.setGravity(new Vector3f(0, -10f, 0));
+    public void setObject(GameObject object) {
+        this.object = object;
     }
 
-
+    @Override
+    public GameObject getObject() {
+        return object;
+    }
 }

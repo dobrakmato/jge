@@ -24,27 +24,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.core.physics;
 
-import com.bulletphysics.collision.broadphase.DbvtBroadphase;
-import com.bulletphysics.collision.dispatch.CollisionConfiguration;
-import com.bulletphysics.collision.dispatch.CollisionDispatcher;
-import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
-import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
-import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
+import com.bulletphysics.dynamics.RigidBody;
+import eu.matejkormuth.jge.AbstractComponent;
+import eu.matejkormuth.jge.editor.Property;
 
-import javax.vecmath.Vector3f;
+public class RigidbodyComponent extends AbstractComponent {
 
-public class World extends DiscreteDynamicsWorld {
+    @Property
+    private RigidBody rigidBody;
 
-    private static CollisionConfiguration config = new DefaultCollisionConfiguration();
+    private void a() {
 
-    public World() {
-        super(new CollisionDispatcher(config),
-                new DbvtBroadphase(), new SequentialImpulseConstraintSolver(), config);
-
-        this.setGravity(new Vector3f(0, -10f, 0));
     }
-
-
 }

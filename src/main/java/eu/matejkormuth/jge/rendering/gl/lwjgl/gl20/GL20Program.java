@@ -36,11 +36,11 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.util.vector.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.vecmath.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -181,11 +181,6 @@ public class GL20Program extends Program {
 
     @Override
     public void setUniform(String name, Vector4f v) {
-
-    }
-
-    @Override
-    public void setUniform(String name, Matrix2f m) {
 
     }
 

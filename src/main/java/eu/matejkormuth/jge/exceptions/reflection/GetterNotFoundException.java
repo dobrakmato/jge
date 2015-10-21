@@ -24,27 +24,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.exceptions.reflection;
 
-import com.bulletphysics.collision.broadphase.DbvtBroadphase;
-import com.bulletphysics.collision.dispatch.CollisionConfiguration;
-import com.bulletphysics.collision.dispatch.CollisionDispatcher;
-import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
-import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
-import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
+public class GetterNotFoundException extends RuntimeException {
 
-import javax.vecmath.Vector3f;
-
-public class World extends DiscreteDynamicsWorld {
-
-    private static CollisionConfiguration config = new DefaultCollisionConfiguration();
-
-    public World() {
-        super(new CollisionDispatcher(config),
-                new DbvtBroadphase(), new SequentialImpulseConstraintSolver(), config);
-
-        this.setGravity(new Vector3f(0, -10f, 0));
+    public GetterNotFoundException(String message) {
+        super(message);
     }
-
-
 }

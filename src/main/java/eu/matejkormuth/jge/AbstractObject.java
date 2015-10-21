@@ -26,25 +26,37 @@
  */
 package eu.matejkormuth.jge;
 
-import com.bulletphysics.collision.broadphase.DbvtBroadphase;
-import com.bulletphysics.collision.dispatch.CollisionConfiguration;
-import com.bulletphysics.collision.dispatch.CollisionDispatcher;
-import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
-import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
-import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import javax.vecmath.Vector3f;
+public abstract class AbstractObject implements GameObject {
 
-public class World extends DiscreteDynamicsWorld {
+    private final World world;
+    private final List<GameComponent> components = new ArrayList<>();
 
-    private static CollisionConfiguration config = new DefaultCollisionConfiguration();
-
-    public World() {
-        super(new CollisionDispatcher(config),
-                new DbvtBroadphase(), new SequentialImpulseConstraintSolver(), config);
-
-        this.setGravity(new Vector3f(0, -10f, 0));
+    public AbstractObject(World world) {
+        this.world = world;
     }
 
+    @Override
+    public void addComponent(@Nonnull GameComponent component) {
+        components.add(component);
+    }
 
+    @Override
+    public void removeComponent(@Nonnull GameComponent component) {
+        components.remove(component);
+    }
+
+    @Override
+    public List<GameComponent> getComponents() {
+        return Collections.unmodifiableList(components);
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
+    }
 }
