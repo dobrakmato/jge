@@ -36,7 +36,7 @@ import java.util.Map;
  * Keeps track of all disposable objects and provides way to check
  * for memory leak by not disposing disposable objects.
  */
-public class MemoryUtil {
+public final class MemoryUtil {
 
     /**
      * Holds references to all disposable resources and objects.

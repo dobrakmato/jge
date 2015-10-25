@@ -41,13 +41,18 @@ public class SceneNode extends AbstractObject implements Node {
     private Node parent = null;
     private String name = null;
 
-    private final List<Node> children = new ArrayList<>();
+    private final List<Node> children;
 
     protected Vector3f position = new Vector3f(0, 0, 0);
     protected Vector3f scale = new Vector3f(1, 1, 1);
     protected Vector3f rotation = new Vector3f(0, 0, 0);
 
     public SceneNode() {
+        children = new ArrayList<>(1);
+    }
+
+    public SceneNode(int initialChildrenCount) {
+        children = new ArrayList<>(initialChildrenCount);
     }
 
     @Override
@@ -83,8 +88,18 @@ public class SceneNode extends AbstractObject implements Node {
     }
 
     @Override
+    public boolean hasChildren() {
+        return !children.isEmpty();
+    }
+
+    @Override
     public int getChildrenCount() {
         return children.size();
+    }
+
+    @Override
+    public void onResourcesInjected() {
+        // Not implemented...
     }
 
     @Override
@@ -145,6 +160,9 @@ public class SceneNode extends AbstractObject implements Node {
 
     @Override
     public void draw() {
-
+        // Draw all child elements.
+        for (int i = 0; i < children.size(); i++) {
+            children.get(i).draw();
+        }
     }
 }

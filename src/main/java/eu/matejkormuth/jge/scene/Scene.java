@@ -28,6 +28,12 @@ package eu.matejkormuth.jge.scene;
 
 import eu.matejkormuth.jge.Drawable;
 import eu.matejkormuth.jge.Updatable;
+import eu.matejkormuth.jge.filesystem.Resource;
+import eu.matejkormuth.jge.reflection.Property;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Scene implements Updatable, Drawable {
 
@@ -35,11 +41,19 @@ public class Scene implements Updatable, Drawable {
     private boolean setUp = false;
 
     public Scene() {
-        rootNode = new SceneNode();
+        rootNode = new SceneNode(10);
         rootNode.setName("RootNode");
     }
 
     public void setUp() {
+
+        // Find resource locations.
+        ResourceLocator locator = new ResourceLocator();
+        locator.visitAll(rootNode);
+
+        // Load resources (maybe gradually from low to high quality?).
+
+        // Inject loaded resources to injection points.
 
         // Resolve physics objects.
 
@@ -66,5 +80,24 @@ public class Scene implements Updatable, Drawable {
         }
     }
 
+    private static class ResourceLocator extends NodeTreeVisitor {
 
+        private final Map<Property, Resource> resourceLocations = new HashMap<>();
+
+        @Override
+        public void visit(Node node) {
+            Class<? extends Node> nodeClass = node.getClass();
+            for (Field field : nodeClass.getFields()) {
+                if (field.isAnnotationPresent(Resource.class)) {
+                    // Add this field to resource locations.
+                    resourceLocations.put(new Property(nodeClass, field.getName()),
+                            field.getDeclaredAnnotation(Resource.class));
+                }
+            }
+        }
+
+        public Map<Property, Resource> getResourceLocations() {
+            return resourceLocations;
+        }
+    }
 }

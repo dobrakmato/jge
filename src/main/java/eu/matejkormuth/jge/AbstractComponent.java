@@ -32,11 +32,6 @@ public abstract class AbstractComponent implements GameComponent {
 
     private GameObject object;
 
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
-
     public void setObject(@Nonnull GameObject object) {
         this.object = object;
     }
@@ -48,6 +43,6 @@ public abstract class AbstractComponent implements GameComponent {
 
     @Override
     public void update(float deltaTime) {
-        updateImplemented = false;
+
     }
 }

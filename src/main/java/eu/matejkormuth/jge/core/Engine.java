@@ -31,6 +31,7 @@ import eu.matejkormuth.jge.filesystem.Content;
 import eu.matejkormuth.jge.filesystem.FileSystem;
 import eu.matejkormuth.jge.filesystem.filesystems.LocalFileSystem;
 import eu.matejkormuth.jge.rendering.GLRenderer;
+import eu.matejkormuth.jge.rendering.RenderPipeline;
 import eu.matejkormuth.jge.scene.SceneManager;
 import groovy.lang.GroovyShell;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,7 @@ public class Engine {
     public static FileSystem fileSystem;
     public static Content content;
     public static SceneManager sceneManager;
+    public static RenderPipeline renderPipeline;
 
     public Engine() {
         internal();
@@ -70,31 +72,40 @@ public class Engine {
             throw new RuntimeException(e);
         }
 
-        // Init GL
-        renderer = new GLRenderer();
-
+        // Options for Engine from configuration.
         int width = configuration.getInteger("width", 1280);
         int height = configuration.getInteger("height", 720);
         boolean fullscreen = configuration.getBoolean("fullscreen", false);
 
+        // Init GL.
+        renderer = new GLRenderer();
         renderer.create(width, height, fullscreen);
 
-        // Init AL
+        // Init scene manager.
+        sceneManager = new SceneManager();
+
+        // Init render pipeline.
+        renderPipeline = new RenderPipeline(sceneManager);
+
+        // Init AL.
 
         // Init Scripting
         CompilerConfiguration config = new CompilerConfiguration();
         config.setScriptBaseClass("eu.matejkormuth.jge.scripting.BaseScript");
         shell = new GroovyShell(config);
 
-        // Init Resources
+        // Init virtual file systems.
         fileSystem = new LocalFileSystem(new File("./content/").getAbsolutePath());
 
+        // Init Resources and Content loader.
         content = new Content(fileSystem);
 
         // Init all other sub-systems.
 
         // Start main script.
         shell.evaluate(fileSystem.readText("main.groovy"));
+
+        // Start main game loop.
     }
 
     public static void shutdown() {

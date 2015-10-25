@@ -26,23 +26,13 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
-import eu.matejkormuth.jge.Disposable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-public abstract class Resource implements Disposable {
-
-    protected boolean disposed = false;
-
-    @Override
-    public boolean isDisposed() {
-        return disposed;
-    }
-
-    @Override
-    public void dispose() {
-        if(disposed) {
-            throw new IllegalStateException("resource is already disposed!");
-        }
-
-        disposed = true;
-    }
+/**
+ * Represents resource injection point.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Resource {
+    Class<?> value();
 }

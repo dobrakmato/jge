@@ -26,9 +26,11 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
+import eu.matejkormuth.jge.AbstractDisposable;
+
 import java.io.InputStream;
 
-public interface ResourceLoader<T extends Resource> {
+public interface ResourceLoader<T extends AbstractDisposable> {
 
     void loadInto(T resource, InputStream stream) throws Exception;
 }

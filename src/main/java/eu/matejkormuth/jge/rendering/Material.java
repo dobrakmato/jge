@@ -26,10 +26,10 @@
  */
 package eu.matejkormuth.jge.rendering;
 
-import eu.matejkormuth.jge.filesystem.Resource;
+import eu.matejkormuth.jge.AbstractDisposable;
 import eu.matejkormuth.jge.rendering.gl.api.Texture;
 
-public class Material extends Resource {
+public class Material extends AbstractDisposable {
 
     private Texture diffuse;
     private Texture normalMap;

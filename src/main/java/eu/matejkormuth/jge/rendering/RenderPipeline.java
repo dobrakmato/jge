@@ -24,45 +24,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.scene;
+package eu.matejkormuth.jge.rendering;
 
 import eu.matejkormuth.jge.Drawable;
-import eu.matejkormuth.jge.Updatable;
+import eu.matejkormuth.jge.scene.SceneManager;
 
-public class SceneManager implements Updatable, Drawable {
+public class RenderPipeline implements Drawable {
 
-    private Scene scene;
+    private SceneManager sceneManager;
 
-    public SceneManager() {
-        // Init with empty scene.
-        scene = new Scene();
-        scene.setUp();
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-
-        // Setup this scene if it is not already set up.
-        if (!this.scene.isSetUp()) {
-            this.scene.setUp();
-        }
-    }
-
-    public Scene getScene() {
-        return scene;
+    public RenderPipeline(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
     }
 
     @Override
     public void draw() {
-        if (this.scene != null) {
-            scene.draw();
-        }
-    }
 
-    @Override
-    public void update(float deltaTime) {
-        if (this.scene != null) {
-            scene.update(deltaTime);
-        }
+        // render 3d
+        this.sceneManager.draw();
+
+        // render to quad using post process shaders
+
+        // render 2d gui
+        // this.2dgui.render();
     }
 }

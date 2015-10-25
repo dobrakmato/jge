@@ -45,6 +45,8 @@ public interface Node extends Named, Updatable, Drawable {
 
     boolean hasChild(@Nonnull String name);
 
+    boolean hasChildren();
+
     int getChildrenCount();
 
     Vector3f getPosition();
@@ -64,4 +66,10 @@ public interface Node extends Named, Updatable, Drawable {
     @Nullable Node getParent();
 
     void setParent(Node node);
+
+    /*
+     * Some on* event methods.
+     */
+
+    void onResourcesInjected();
 }

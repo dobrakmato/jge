@@ -24,45 +24,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.scene;
+package eu.matejkormuth.jge;
 
-import eu.matejkormuth.jge.Drawable;
-import eu.matejkormuth.jge.Updatable;
+public abstract class AbstractDisposable implements Disposable {
 
-public class SceneManager implements Updatable, Drawable {
+    protected boolean disposed = false;
 
-    private Scene scene;
-
-    public SceneManager() {
-        // Init with empty scene.
-        scene = new Scene();
-        scene.setUp();
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-
-        // Setup this scene if it is not already set up.
-        if (!this.scene.isSetUp()) {
-            this.scene.setUp();
-        }
-    }
-
-    public Scene getScene() {
-        return scene;
+    @Override
+    public boolean isDisposed() {
+        return disposed;
     }
 
     @Override
-    public void draw() {
-        if (this.scene != null) {
-            scene.draw();
+    public void dispose() {
+        if(disposed) {
+            throw new IllegalStateException("resource is already disposed!");
         }
-    }
 
-    @Override
-    public void update(float deltaTime) {
-        if (this.scene != null) {
-            scene.update(deltaTime);
-        }
+        disposed = true;
     }
 }

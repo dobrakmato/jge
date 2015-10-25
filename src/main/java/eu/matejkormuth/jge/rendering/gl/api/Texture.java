@@ -26,14 +26,14 @@
  */
 package eu.matejkormuth.jge.rendering.gl.api;
 
-import eu.matejkormuth.jge.filesystem.Resource;
+import eu.matejkormuth.jge.AbstractDisposable;
 import eu.matejkormuth.jge.rendering.gl.enums.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.nio.ByteBuffer;
 
-public abstract class Texture extends Resource implements GraphicResource {
+public abstract class Texture extends AbstractDisposable implements GraphicResource {
 
     public abstract void activate(int samplerSlot);
 

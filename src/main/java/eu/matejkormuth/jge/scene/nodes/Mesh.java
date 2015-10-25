@@ -26,6 +26,7 @@
  */
 package eu.matejkormuth.jge.scene.nodes;
 
+import eu.matejkormuth.jge.filesystem.Resource;
 import eu.matejkormuth.jge.rendering.Material;
 import eu.matejkormuth.jge.rendering.gl.api.VertexArray;
 import eu.matejkormuth.jge.scene.SceneNode;
@@ -33,7 +34,8 @@ import eu.matejkormuth.jge.scene.SceneNode;
 public class Mesh extends SceneNode {
 
     // Model of mesh.
-    private Material material;
+    @Resource(Material.class)
+    private Object material;
 
     private VertexArray mesh;
 

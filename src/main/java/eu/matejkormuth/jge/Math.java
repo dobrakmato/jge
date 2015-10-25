@@ -26,7 +26,7 @@
  */
 package eu.matejkormuth.jge;
 
-public class Math {
+public final class Math {
 
     private Math() {
     }

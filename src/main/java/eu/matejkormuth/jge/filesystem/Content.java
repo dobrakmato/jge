@@ -26,6 +26,7 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
+import eu.matejkormuth.jge.AbstractDisposable;
 import eu.matejkormuth.jge.filesystem.loaders.TextureLoader;
 import eu.matejkormuth.jge.rendering.gl.api.Texture;
 import eu.matejkormuth.jge.rendering.gl.lwjgl.gl20.GL20Texture;
@@ -38,7 +39,7 @@ public class Content {
 
     private final FileSystem fileSystem;
     private final Map<Class<?>, ResourceLoader> resourceLoaders = new HashMap<>();
-    private final Map<Class<?>, Supplier<Resource>> resourceFactories = new HashMap<>();
+    private final Map<Class<?>, Supplier<AbstractDisposable>> resourceFactories = new HashMap<>();
 
     public Content(FileSystem fileSystem) {
         this.fileSystem = fileSystem;
@@ -61,18 +62,18 @@ public class Content {
             throw new IllegalArgumentException("No resource factory was found for resource type: " + type.getName());
         }
 
-        Resource resource = resourceFactories.get(type).get();
+        AbstractDisposable abstractDisposable = resourceFactories.get(type).get();
         try {
-            resourceLoaders.get(type).loadInto(resource, fileSystem.openRead(path));
+            resourceLoaders.get(type).loadInto(abstractDisposable, fileSystem.openRead(path));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return cast(resource);
+        return cast(abstractDisposable);
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T cast(Resource resource) {
-        return (T) resource;
+    private <T> T cast(AbstractDisposable abstractDisposable) {
+        return (T) abstractDisposable;
     }
 }

@@ -26,43 +26,53 @@
  */
 package eu.matejkormuth.jge.scene;
 
-import eu.matejkormuth.jge.Drawable;
-import eu.matejkormuth.jge.Updatable;
+import lombok.extern.slf4j.Slf4j;
 
-public class SceneManager implements Updatable, Drawable {
+/**
+ * Represents recursive node tree visitor abstract class.
+ */
+@Slf4j
+public abstract class NodeTreeVisitor {
 
-    private Scene scene;
+    /**
+     * Max depth of recursive method.
+     */
+    private static final int MAX_DEPTH = 256;
 
-    public SceneManager() {
-        // Init with empty scene.
-        scene = new Scene();
-        scene.setUp();
+    /**
+     * Creates new recursive node tree visitor.
+     */
+    public NodeTreeVisitor() {
     }
 
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    // User visit method.
+    public abstract void visit(Node node);
 
-        // Setup this scene if it is not already set up.
-        if (!this.scene.isSetUp()) {
-            this.scene.setUp();
+    /**
+     * Visits all nodes in node tree including root node.
+     */
+    public void visitAll(Node root) {
+        visitNode(root, 1);
+    }
+
+    /**
+     * Visits specified node and recursively all it's children nodes.
+     *
+     * @param node node to visit
+     */
+    private void visitNode(Node node, int currentDepth) {
+        if(currentDepth > MAX_DEPTH) {
+            log.warn("Node tree is too deep, returning without visiting some nodes!");
+            return;
         }
-    }
 
-    public Scene getScene() {
-        return scene;
-    }
-
-    @Override
-    public void draw() {
-        if (this.scene != null) {
-            scene.draw();
+        // Descent level down if needed.
+        if (node.hasChildren()) {
+            node.getChildren().forEach(n -> visitNode(n, currentDepth + 1));
         }
+
+        // Call user visit method.
+        visit(node);
     }
 
-    @Override
-    public void update(float deltaTime) {
-        if (this.scene != null) {
-            scene.update(deltaTime);
-        }
-    }
 }

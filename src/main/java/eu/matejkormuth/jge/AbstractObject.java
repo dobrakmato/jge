@@ -35,7 +35,7 @@ import java.util.List;
 public abstract class AbstractObject implements GameObject {
 
     protected World world;
-    private final List<GameComponent> components = new ArrayList<>();
+    private final List<GameComponent> components = new ArrayList<>(5);
 
     @Override
     public void addComponent(@Nonnull GameComponent component) {
