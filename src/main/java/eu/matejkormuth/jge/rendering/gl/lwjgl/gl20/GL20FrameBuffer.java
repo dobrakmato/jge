@@ -26,7 +26,8 @@
  */
 package eu.matejkormuth.jge.rendering.gl.lwjgl.gl20;
 
-import eu.matejkormuth.jge.exceptions.UnsupportedExtensionException;
+import eu.matejkormuth.jge.MemoryUtil;
+import eu.matejkormuth.jge.exceptions.gl.UnsupportedExtensionException;
 import eu.matejkormuth.jge.rendering.BufferUtil;
 import eu.matejkormuth.jge.rendering.gl.api.FrameBuffer;
 import eu.matejkormuth.jge.rendering.gl.api.RenderBuffer;
@@ -67,6 +68,8 @@ public class GL20FrameBuffer extends FrameBuffer {
         GL11.glReadBuffer(GL11.GL_NONE);
 
         this.unbind();
+
+        MemoryUtil.register(this);
     }
 
     @Override
@@ -185,6 +188,8 @@ public class GL20FrameBuffer extends FrameBuffer {
         id = -1;
 
         outputBuffers.clear();
+
+        MemoryUtil.unregister(this);
     }
 
     @Override

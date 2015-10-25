@@ -26,28 +26,24 @@
  */
 package eu.matejkormuth.jge;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-public abstract class AbstractComponent implements GameComponent {
-
-    private GameObject object;
+/**
+ * Represent object that has name.
+ */
+public interface Named {
 
     /**
-     * Whether the update method has been implemented.
+     * Returns the name of this object.
+     *
+     * @return the name
      */
-    public boolean updateImplemented = true;
+    @Nullable String getName();
 
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
-    }
-
-    @Override
-    public GameObject getObject() {
-        return object;
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
-    }
+    /**
+     * Sets the name of this object.
+     *
+     * @param name new name of this object
+     */
+    void setName(@Nullable String name);
 }

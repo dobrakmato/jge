@@ -24,9 +24,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.scene.nodes;
+package eu.matejkormuth.jge.scripting;
 
-import eu.matejkormuth.jge.GameObject;
+import eu.matejkormuth.jge.core.Engine;
+import groovy.lang.Script;
 
-public interface Node extends GameObject {
+public abstract class BaseScript extends Script {
+    public Object eval(String file) {
+        return evaluate(Engine.fileSystem.readText(file));
+    }
 }

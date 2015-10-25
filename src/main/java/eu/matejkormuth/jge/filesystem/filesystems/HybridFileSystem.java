@@ -24,10 +24,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.filesystem;
+package eu.matejkormuth.jge.filesystem.filesystems;
 
+import eu.matejkormuth.jge.filesystem.FileSystem;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collection;
 
+@Slf4j
 public class HybridFileSystem implements FileSystem {
 
     private final LocalFileSystem localCache;
@@ -38,32 +45,71 @@ public class HybridFileSystem implements FileSystem {
         this.remote = new RemoteFileSystem(remoteRoot);
     }
 
-    private boolean localExists(Path path) {
+    private boolean localExists(String path) {
         return localCache.exists(path);
     }
 
     @Override
-    public Path get(String path) {
-        return new Path(localCache.getRoot(), path);
+    public InputStream openRead(String path) {
+        return null;
     }
 
     @Override
-    public boolean exists(Path path) {
-        return localExists(path) || remote.exists(path);
+    public OutputStream openWrite(String path) {
+        return null;
     }
 
     @Override
-    public boolean isFile(Path path) {
+    public String readText(String path) {
+        return null;
+    }
+
+    @Override
+    public void createDirectory(String path) throws IOException {
+
+    }
+
+    @Override
+    public void createDirectories(String path) throws IOException {
+
+    }
+
+    @Override
+    public void createFile(String path) throws IOException {
+
+    }
+
+    @Override
+    public boolean exists(String path) {
+        if (localExists(path)) {
+            return true;
+        }
+
+        // Cache result.
+        if (remote.exists(path)) {
+            try {
+                localCache.createDirectories(path);
+                localCache.createFile(path);
+            } catch (Exception e) {
+                log.error("Can't create local file {}! Exception: {}", path, e);
+            }
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean isDirectory(Path path) {
+    public boolean isFile(String path) {
         return false;
     }
 
     @Override
-    public Collection<Path> getAllFiles(Path directory) {
+    public boolean isDirectory(String path) {
+        return false;
+    }
+
+    @Override
+    public Collection<String> getAllFiles(String directory) {
         return null;
     }
 }

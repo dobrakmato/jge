@@ -26,5 +26,45 @@
  */
 package eu.matejkormuth.jge.scene;
 
-public interface Scene {
+import eu.matejkormuth.jge.Drawable;
+import eu.matejkormuth.jge.Updatable;
+
+public class Scene implements Updatable, Drawable {
+
+    private SceneNode rootNode;
+    private boolean setUp = false;
+
+    public Scene() {
+        rootNode = new SceneNode();
+        rootNode.setName("RootNode");
+    }
+
+    public void setUp() {
+
+        // Resolve physics objects.
+
+        // Resolve lights.
+
+        setUp = true;
+    }
+
+    public boolean isSetUp() {
+        return setUp;
+    }
+
+    @Override
+    public void draw() {
+        if (rootNode != null) {
+            rootNode.draw();
+        }
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        if (rootNode != null) {
+            rootNode.update(deltaTime);
+        }
+    }
+
+
 }

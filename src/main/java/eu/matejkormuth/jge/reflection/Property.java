@@ -54,6 +54,8 @@ public class Property {
 
     private final Class<?> clazz;
     private final Class<?> propertyType;
+
+    // TODO: Convert to method handles.
     private final Method getter;
     private final Method setter;
 

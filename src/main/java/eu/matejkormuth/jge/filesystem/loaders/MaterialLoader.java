@@ -24,30 +24,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.filesystem.loaders;
 
-import javax.annotation.Nonnull;
+import eu.matejkormuth.jge.configuration.SimpleConfiguration;
+import eu.matejkormuth.jge.filesystem.ResourceLoader;
+import eu.matejkormuth.jge.rendering.Material;
 
-public abstract class AbstractComponent implements GameComponent {
+import java.io.InputStream;
 
-    private GameObject object;
-
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
-
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
-    }
+public class MaterialLoader implements ResourceLoader<Material> {
 
     @Override
-    public GameObject getObject() {
-        return object;
-    }
+    public void loadInto(Material resource, InputStream stream) throws Exception {
+        SimpleConfiguration configuration = SimpleConfiguration.loadFrom(stream);
 
-    @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
+        resource.setSpecularIntensity(configuration.getFloat("specularIntensity"));
     }
 }

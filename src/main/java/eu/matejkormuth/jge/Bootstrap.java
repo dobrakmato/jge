@@ -26,16 +26,17 @@
  */
 package eu.matejkormuth.jge;
 
+import eu.matejkormuth.jge.core.Engine;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Bootstrap {
 
-    //private static final Logger log = LoggerFactory.getLogger(Bootstrap.class);
-
     public static void main(String[] args) {
         // Enable LWJGL debug.
         System.setProperty("org.lwjgl.util.Debug", "true");
+
+        new Engine();
 
         // Check for leaks.
         if (!MemoryUtil.allDisposed()) {
@@ -48,6 +49,8 @@ public class Bootstrap {
                         log.error("Undisposed: {}", disposable);
                         disposable.dispose();
                     });
+
+            MemoryUtil.clear();
         }
     }
 }

@@ -26,6 +26,7 @@
  */
 package eu.matejkormuth.jge.rendering.gl.lwjgl.gl20;
 
+import eu.matejkormuth.jge.MemoryUtil;
 import eu.matejkormuth.jge.rendering.gl.api.VertexArray;
 import eu.matejkormuth.jge.rendering.gl.enums.GLVersion;
 import org.lwjgl.opengl.APPLEVertexArrayObject;
@@ -36,6 +37,7 @@ public class GL20VertexArray extends VertexArray {
     protected int id;
 
     public GL20VertexArray() {
+        MemoryUtil.register(this);
     }
 
     @Override
@@ -52,6 +54,8 @@ public class GL20VertexArray extends VertexArray {
     public void dispose() {
 
         id = -1;
+
+        MemoryUtil.unregister(this);
     }
 
     @Override

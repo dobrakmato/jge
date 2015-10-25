@@ -28,7 +28,7 @@ package eu.matejkormuth.jge.rendering;
 
 public interface Renderer {
 
-    void create();
+    void create(int width, int height, boolean fullscreen);
 
     void destroy();
 

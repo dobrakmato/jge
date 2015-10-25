@@ -24,30 +24,39 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.rendering;
 
-import javax.annotation.Nonnull;
+import eu.matejkormuth.jge.filesystem.Resource;
+import eu.matejkormuth.jge.rendering.gl.api.Texture;
 
-public abstract class AbstractComponent implements GameComponent {
+public class Material extends Resource {
 
-    private GameObject object;
+    private Texture diffuse;
+    private Texture normalMap;
 
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
+    private float specularIntensity;
 
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
+    public Texture getDiffuse() {
+        return diffuse;
     }
 
-    @Override
-    public GameObject getObject() {
-        return object;
+    public void setDiffuse(Texture diffuse) {
+        this.diffuse = diffuse;
     }
 
-    @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
+    public Texture getNormalMap() {
+        return normalMap;
+    }
+
+    public void setNormalMap(Texture normalMap) {
+        this.normalMap = normalMap;
+    }
+
+    public float getSpecularIntensity() {
+        return specularIntensity;
+    }
+
+    public void setSpecularIntensity(float specularIntensity) {
+        this.specularIntensity = specularIntensity;
     }
 }

@@ -26,7 +26,8 @@
  */
 package eu.matejkormuth.jge.rendering.gl.lwjgl.gl20;
 
-import eu.matejkormuth.jge.exceptions.ProgramLinkException;
+import eu.matejkormuth.jge.MemoryUtil;
+import eu.matejkormuth.jge.exceptions.gl.ProgramLinkException;
 import eu.matejkormuth.jge.rendering.gl.api.Program;
 import eu.matejkormuth.jge.rendering.gl.api.Shader;
 import eu.matejkormuth.jge.rendering.gl.enums.GLVersion;
@@ -75,6 +76,8 @@ public class GL20Program extends Program {
 
     public GL20Program() {
         id = GL20.glCreateProgram();
+
+        MemoryUtil.register(this);
     }
 
     @Override
@@ -212,6 +215,8 @@ public class GL20Program extends Program {
         uniformLocations.clear();
 
         id = -1;
+
+        MemoryUtil.unregister(this);
     }
 
     @Override

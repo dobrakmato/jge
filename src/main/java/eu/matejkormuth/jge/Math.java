@@ -24,54 +24,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.filesystem;
+package eu.matejkormuth.jge;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
+public class Math {
 
-public class RemoteFileSystem implements FileSystem {
-
-    private final String root;
-
-    public RemoteFileSystem(String httpRoot) {
-        this.root = httpRoot;
-
-        // Check for validity.
-        try {
-            new URL(httpRoot);
-        } catch (MalformedURLException e) {
-            throw new IllegalArgumentException(e);
-        }
+    private Math() {
     }
 
-    @Override
-    public Path get(String path) {
-        return new Path(root, path);
+    public static float clamp(float val, float min, float max) {
+        return java.lang.Math.max(min, java.lang.Math.min(max, val));
     }
 
-    private void downloadFile(String from, String to) {
-
-    }
-
-    @Override
-    public boolean exists(Path path) {
-        // TODO: Make HEAD request.
-        return false;
-    }
-
-    @Override
-    public boolean isFile(Path path) {
-        return false;
-    }
-
-    @Override
-    public boolean isDirectory(Path path) {
-        return false;
-    }
-
-    @Override
-    public Collection<Path> getAllFiles(Path directory) {
-        return null;
+    public static double clamp(double val, double min, double max) {
+        return java.lang.Math.max(min, java.lang.Math.min(max, val));
     }
 }

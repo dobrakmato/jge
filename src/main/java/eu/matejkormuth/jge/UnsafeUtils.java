@@ -26,28 +26,12 @@
  */
 package eu.matejkormuth.jge;
 
-import javax.annotation.Nonnull;
-
-public abstract class AbstractComponent implements GameComponent {
-
-    private GameObject object;
-
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
-
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
+public final class UnsafeUtils {
+    private UnsafeUtils() {
     }
 
-    @Override
-    public GameObject getObject() {
-        return object;
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
+    @SuppressWarnings("unchecked")
+    public static <T> T cast(Object o) {
+        return (T) o;
     }
 }

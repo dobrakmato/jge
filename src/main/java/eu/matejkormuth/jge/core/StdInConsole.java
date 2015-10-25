@@ -24,30 +24,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.core;
 
-import javax.annotation.Nonnull;
+import eu.matejkormuth.jge.Disposable;
 
-public abstract class AbstractComponent implements GameComponent {
+import java.util.Scanner;
 
-    private GameObject object;
+public class StdInConsole implements Disposable {
 
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
+    private final Thread t;
+    private final Scanner scanner = new Scanner(System.in);
 
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
+    public StdInConsole() {
+        t = new Thread(this::readStdIn, "StdInConsole/Reader");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private void readStdIn() {
+        while (!t.isInterrupted()) {
+            String line = scanner.nextLine();
+
+            if(line.equalsIgnoreCase("exit")) {
+                // Exit application.
+                Engine.shutdown();
+                continue;
+            }
+
+            System.out.println(String.format("Can't parse '%s'!", line));
+        }
     }
 
     @Override
-    public GameObject getObject() {
-        return object;
+    public void dispose() {
+        t.interrupt();
     }
 
     @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
+    public boolean isDisposed() {
+        return false;
     }
 }

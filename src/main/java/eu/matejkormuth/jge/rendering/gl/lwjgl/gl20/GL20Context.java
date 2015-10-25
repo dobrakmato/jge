@@ -26,23 +26,32 @@
  */
 package eu.matejkormuth.jge.rendering.gl.lwjgl.gl20;
 
+import eu.matejkormuth.jge.Disposable;
+import eu.matejkormuth.jge.MemoryUtil;
 import eu.matejkormuth.jge.rendering.gl.api.*;
 import eu.matejkormuth.jge.rendering.gl.enums.Capability;
 import eu.matejkormuth.jge.rendering.gl.enums.GLVersion;
+import lombok.extern.slf4j.Slf4j;
 import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.ContextAttribs;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.PixelFormat;
+import org.lwjgl.opengl.*;
 
 import javax.annotation.Nonnull;
 
-public class GL20Context extends Context {
+@Slf4j
+public class GL20Context extends Context implements Disposable {
 
     @Override
-    public void create() {
+    public void create(int width, int height, boolean fullscreen) {
         try {
+            log.info("Creating a GL20 ({}) context.", this.getGLVersion());
+
+            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setFullscreen(fullscreen);
             Display.create(new PixelFormat(), createContextAttributes());
+
+            MemoryUtil.register(this);
+
+            log.info("LWJGL Display ({}) created!", this.getGLVersion());
         } catch (LWJGLException ex) {
             throw new IllegalStateException("Unable to create OpenGL context", ex);
         }
@@ -100,6 +109,8 @@ public class GL20Context extends Context {
     @Override
     public void dispose() {
         Display.destroy();
+
+        MemoryUtil.unregister(this);
     }
 
     @Override

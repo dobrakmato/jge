@@ -26,7 +26,7 @@
  */
 package eu.matejkormuth.jge.rendering.gl.data;
 
-import eu.matejkormuth.jge.exceptions.IllegalShaderTypeException;
+import eu.matejkormuth.jge.exceptions.gl.IllegalShaderTypeException;
 import eu.matejkormuth.jge.rendering.gl.enums.ShaderType;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;

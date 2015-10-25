@@ -24,30 +24,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.exceptions;
 
-import javax.annotation.Nonnull;
-
-public abstract class AbstractComponent implements GameComponent {
-
-    private GameObject object;
-
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
-
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
-    }
-
-    @Override
-    public GameObject getObject() {
-        return object;
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
+public class NoColliderException extends RuntimeException {
+    public NoColliderException(String message) {
+        super(message);
     }
 }

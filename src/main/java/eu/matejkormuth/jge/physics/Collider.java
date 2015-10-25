@@ -24,18 +24,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.core.physics;
+package eu.matejkormuth.jge.physics;
 
-import com.bulletphysics.dynamics.RigidBody;
-import eu.matejkormuth.jge.AbstractComponent;
-import eu.matejkormuth.jge.editor.Property;
+import com.bulletphysics.collision.shapes.CollisionShape;
 
-public class RigidbodyComponent extends AbstractComponent {
+public interface Collider {
 
-    @Property
-    private RigidBody rigidBody;
+    CollisionShape getCollisionShape();
 
-    private void a() {
-
-    }
 }

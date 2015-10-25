@@ -24,30 +24,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.scene;
 
-import javax.annotation.Nonnull;
+import eu.matejkormuth.jge.Drawable;
+import eu.matejkormuth.jge.Updatable;
 
-public abstract class AbstractComponent implements GameComponent {
+public class SceneManager implements Updatable, Drawable {
 
-    private GameObject object;
+    private Scene scene = null;
 
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
+    public void setScene(Scene scene) {
+        this.scene = scene;
 
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
+        // Setup this scene if it is not already set up.
+        if (!this.scene.isSetUp()) {
+            this.scene.setUp();
+        }
     }
 
     @Override
-    public GameObject getObject() {
-        return object;
+    public void draw() {
+        if (this.scene != null) {
+            scene.draw();
+        }
     }
 
     @Override
     public void update(float deltaTime) {
-        updateImplemented = false;
+        if (this.scene != null) {
+            scene.update(deltaTime);
+        }
     }
 }

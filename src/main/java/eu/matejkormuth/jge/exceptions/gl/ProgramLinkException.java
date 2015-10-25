@@ -24,12 +24,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.exceptions;
+package eu.matejkormuth.jge.exceptions.gl;
 
 import org.lwjgl.opengl.OpenGLException;
 
-public class ShaderCompileException extends OpenGLException {
-    public ShaderCompileException(String msg) {
+/**
+ * Thrown when there was error while linking a program.
+ */
+public class ProgramLinkException extends OpenGLException {
+
+    public ProgramLinkException() {
+    }
+
+    public ProgramLinkException(String msg) {
         super(msg);
     }
 }

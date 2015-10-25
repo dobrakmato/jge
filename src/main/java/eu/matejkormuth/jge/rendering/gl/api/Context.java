@@ -34,7 +34,7 @@ import javax.annotation.Nonnull;
 
 public abstract class Context implements Disposable {
 
-    public abstract void create();
+    public abstract void create(int width, int height, boolean fullscreen);
 
     public abstract GLVersion getGLVersion();
 

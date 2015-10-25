@@ -33,14 +33,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provides way to check for memory leak by wrong usage of disposable objects.
+ * Keeps track of all disposable objects and provides way to check
+ * for memory leak by not disposing disposable objects.
  */
 public class MemoryUtil {
 
     /**
      * Holds references to all disposable resources and objects.
      */
-    private static Map<Class<? extends Disposable>, List<Disposable>> disposables = new HashMap<>();
+    private static final Map<Class<? extends Disposable>, List<Disposable>> disposables = new HashMap<>();
 
     /**
      * Adds specified Disposable object to registered disposables.
@@ -114,5 +115,12 @@ public class MemoryUtil {
                 .forEach(disposables1 -> disposables1
                         .stream()
                         .forEach(Disposable::dispose));
+    }
+
+    /**
+     * Clears internal map of undisposed objects.
+     */
+    public static void clear() {
+        disposables.clear();
     }
 }

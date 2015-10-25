@@ -27,18 +27,15 @@
 package eu.matejkormuth.jge;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractObject implements GameObject {
 
-    private final World world;
+    protected World world;
     private final List<GameComponent> components = new ArrayList<>();
-
-    public AbstractObject(World world) {
-        this.world = world;
-    }
 
     @Override
     public void addComponent(@Nonnull GameComponent component) {
@@ -50,9 +47,50 @@ public abstract class AbstractObject implements GameObject {
         components.remove(component);
     }
 
+    @Nullable
+    @Override
+    public <T> T getComponent(@Nonnull Class<T> type) {
+        for (int i = 0; i < components.size(); i++) {
+            if (type.isAssignableFrom(components.get(i).getClass())) {
+                return UnsafeUtils.cast(components.get(i));
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public <T> T getComponentExact(@Nonnull Class<T> type) {
+        for (int i = 0; i < components.size(); i++) {
+            if (components.get(i).getClass().equals(type)) {
+                return UnsafeUtils.cast(components.get(i));
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean hasComponents() {
+        return components.size() != 0;
+    }
+
     @Override
     public List<GameComponent> getComponents() {
         return Collections.unmodifiableList(components);
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        if (!components.isEmpty()) {
+            int count = components.size();
+            for (int i = 0; i < count; i++) {
+                components.get(i).update(deltaTime);
+            }
+        }
+    }
+
+    public void setWorld(@Nonnull World world) {
+        this.world = world;
     }
 
     @Override

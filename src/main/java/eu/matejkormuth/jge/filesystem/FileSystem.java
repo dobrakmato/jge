@@ -26,17 +26,30 @@
  */
 package eu.matejkormuth.jge.filesystem;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collection;
 
 public interface FileSystem {
 
-    Path get(String path);
+    InputStream openRead(String path);
 
-    boolean exists(Path path);
+    OutputStream openWrite(String path);
 
-    boolean isFile(Path path);
+    String readText(String path);
 
-    boolean isDirectory(Path path);
+    void createDirectory(String path) throws IOException;
 
-    Collection<Path> getAllFiles(Path directory);
+    void createDirectories(String path) throws IOException;
+
+    void createFile(String path) throws IOException;
+
+    boolean exists(String path);
+
+    boolean isFile(String path);
+
+    boolean isDirectory(String path);
+
+    Collection<String> getAllFiles(String directory);
 }

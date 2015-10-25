@@ -30,17 +30,15 @@ import eu.matejkormuth.jge.filesystem.ResourceLoader;
 import eu.matejkormuth.jge.rendering.BufferUtil;
 import eu.matejkormuth.jge.rendering.gl.api.Texture;
 import eu.matejkormuth.jge.rendering.gl.enums.Format;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+@Slf4j
 public class TextureLoader implements ResourceLoader<Texture> {
-
-    private static final Logger log = LoggerFactory.getLogger(TextureLoader.class);
 
     /**
      * We load textures with RGBA format.
@@ -77,6 +75,8 @@ public class TextureLoader implements ResourceLoader<Texture> {
                 }
             }
         }
+
+        img.flush();
 
         // Flip buffer.
         texData.flip();

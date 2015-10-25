@@ -26,7 +26,8 @@
  */
 package eu.matejkormuth.jge.rendering.gl.lwjgl.gl20;
 
-import eu.matejkormuth.jge.exceptions.ShaderCompileException;
+import eu.matejkormuth.jge.MemoryUtil;
+import eu.matejkormuth.jge.exceptions.gl.ShaderCompileException;
 import eu.matejkormuth.jge.rendering.gl.api.Shader;
 import eu.matejkormuth.jge.rendering.gl.data.ShaderSource;
 import eu.matejkormuth.jge.rendering.gl.enums.GLVersion;
@@ -62,6 +63,7 @@ public class GL20Shader extends Shader {
 
 
     public GL20Shader() {
+        MemoryUtil.register(this);
     }
 
     public void setSource(@Nonnull ShaderSource source) {
@@ -136,6 +138,8 @@ public class GL20Shader extends Shader {
     public void dispose() {
         GL20.glDeleteShader(id);
         id = -1;
+
+        MemoryUtil.unregister(this);
     }
 
     @Override

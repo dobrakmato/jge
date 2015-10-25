@@ -37,13 +37,19 @@ import javax.vecmath.Vector3f;
 
 public class World extends DiscreteDynamicsWorld {
 
+    private static final Vector3f EARTH_GRAVITY = new Vector3f(0, -10f, 0);
+
     private static CollisionConfiguration config = new DefaultCollisionConfiguration();
 
     public World() {
         super(new CollisionDispatcher(config),
                 new DbvtBroadphase(), new SequentialImpulseConstraintSolver(), config);
 
-        this.setGravity(new Vector3f(0, -10f, 0));
+        this.setGravity(EARTH_GRAVITY);
+    }
+
+    public void addObject(GameObject gameObject) {
+
     }
 
 

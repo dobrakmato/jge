@@ -139,4 +139,15 @@ public enum GLVersion {
     public boolean supportsGLSL() {
         return glslMajor != 0;
     }
+
+    @Override
+    public String toString() {
+        return "GLVersion{" +
+                "major=" + major +
+                ", minor=" + minor +
+                ", es=" + es +
+                ", glslMajor=" + glslMajor +
+                ", glslMinor=" + glslMinor +
+                '}';
+    }
 }

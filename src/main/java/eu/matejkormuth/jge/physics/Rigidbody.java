@@ -24,10 +24,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.exceptions;
+package eu.matejkormuth.jge.physics;
 
-public class IllegalShaderTypeException extends IllegalArgumentException {
-    public IllegalShaderTypeException(String msg) {
-        super(msg);
+import com.bulletphysics.collision.shapes.CollisionShape;
+import com.bulletphysics.dynamics.RigidBody;
+import com.bulletphysics.linearmath.DefaultMotionState;
+import eu.matejkormuth.jge.AbstractComponent;
+import eu.matejkormuth.jge.editor.Property;
+import eu.matejkormuth.jge.exceptions.NoColliderException;
+
+import javax.vecmath.Vector3f;
+
+public class Rigidbody extends AbstractComponent {
+
+    // Internal rigid body.
+    private RigidBody rigidBody;
+
+    @Property
+    private float mass = 0;
+
+    public Rigidbody() {
+        CollisionShape shape = getObject().getComponent(CollisionShape.class);
+
+        if (shape == null) {
+            throw new NoColliderException("This object does have rigidbody component, but no collider!");
+        }
+
+        Vector3f localInertia = new Vector3f(0, 0, 0);
+
+        if (mass != 0) {
+            shape.calculateLocalInertia(mass, localInertia);
+        }
+
+        rigidBody = new RigidBody(mass, new DefaultMotionState(), shape, localInertia);
     }
 }

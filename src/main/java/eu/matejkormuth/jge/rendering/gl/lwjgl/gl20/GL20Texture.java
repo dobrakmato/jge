@@ -26,6 +26,7 @@
  */
 package eu.matejkormuth.jge.rendering.gl.lwjgl.gl20;
 
+import eu.matejkormuth.jge.MemoryUtil;
 import eu.matejkormuth.jge.rendering.BufferUtil;
 import eu.matejkormuth.jge.rendering.gl.api.Texture;
 import eu.matejkormuth.jge.rendering.gl.enums.*;
@@ -49,6 +50,8 @@ public class GL20Texture extends Texture {
 
     public GL20Texture() {
         id = GL11.glGenTextures();
+
+        MemoryUtil.register(this);
     }
 
     @Override
@@ -213,6 +216,8 @@ public class GL20Texture extends Texture {
         GL11.glDeleteTextures(id);
 
         id = -1;
+
+        MemoryUtil.unregister(this);
     }
 
     @Override

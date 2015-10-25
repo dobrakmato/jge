@@ -26,7 +26,8 @@
  */
 package eu.matejkormuth.jge.rendering.gl.lwjgl.gl20;
 
-import eu.matejkormuth.jge.exceptions.UnsupportedExtensionException;
+import eu.matejkormuth.jge.MemoryUtil;
+import eu.matejkormuth.jge.exceptions.gl.UnsupportedExtensionException;
 import eu.matejkormuth.jge.rendering.gl.api.RenderBuffer;
 import eu.matejkormuth.jge.rendering.gl.enums.GLVersion;
 import eu.matejkormuth.jge.rendering.gl.enums.InternalFormat;
@@ -51,6 +52,8 @@ public class GL20RenderBuffer extends RenderBuffer {
 
         // Create render buffer.
         id = EXTFramebufferObject.glGenRenderbuffersEXT();
+
+        MemoryUtil.register(this);
     }
 
     @Override
@@ -112,6 +115,8 @@ public class GL20RenderBuffer extends RenderBuffer {
     public void dispose() {
         EXTFramebufferObject.glDeleteRenderbuffersEXT(id);
         id = -1;
+
+        MemoryUtil.unregister(this);
     }
 
     @Override

@@ -26,9 +26,11 @@
  */
 package eu.matejkormuth.jge;
 
-public interface GameComponent {
+import javax.annotation.Nonnull;
 
-    void setObject(GameObject attachedTo);
+public interface GameComponent extends Updatable {
+
+    void setObject(@Nonnull GameObject attachedTo);
 
     GameObject getObject();
 

@@ -24,30 +24,37 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.physics;
 
-import javax.annotation.Nonnull;
+import com.bulletphysics.collision.shapes.BoxShape;
+import com.bulletphysics.collision.shapes.CollisionShape;
+import eu.matejkormuth.jge.AbstractComponent;
+import eu.matejkormuth.jge.editor.Property;
 
-public abstract class AbstractComponent implements GameComponent {
+import javax.vecmath.Vector3f;
 
-    private GameObject object;
+public class BoxCollider extends AbstractComponent implements Collider {
 
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
+    private BoxShape shape;
 
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
+    @Property
+    private Vector3f halfExtents = new Vector3f(1, 1, 1);
+
+    public BoxCollider() {
+        shape = new BoxShape(halfExtents);
+    }
+
+    public Vector3f getHalfExtents() {
+        return halfExtents;
+    }
+
+    public void setHalfExtents(Vector3f halfExtents) {
+        this.halfExtents = halfExtents;
+        this.shape = new BoxShape(halfExtents);
     }
 
     @Override
-    public GameObject getObject() {
-        return object;
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
+    public CollisionShape getCollisionShape() {
+        return shape;
     }
 }

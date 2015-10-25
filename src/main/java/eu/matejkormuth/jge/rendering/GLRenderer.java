@@ -27,18 +27,25 @@
 package eu.matejkormuth.jge.rendering;
 
 import eu.matejkormuth.jge.rendering.gl.lwjgl.gl20.GL20Context;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GLRenderer implements Renderer {
 
     private GL20Context gl;
 
     @Override
-    public void create() {
+    public void create(int width, int height, boolean fullscreen) {
         gl = new GL20Context();
+        gl.create(width, height, fullscreen);
     }
 
     @Override
     public void destroy() {
         gl.dispose();
+    }
+
+    public GL20Context getGl() {
+        return gl;
     }
 }

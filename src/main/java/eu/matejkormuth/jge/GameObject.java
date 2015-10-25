@@ -27,16 +27,25 @@
 package eu.matejkormuth.jge;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
-public interface GameObject {
+public interface GameObject extends Updatable {
 
     void addComponent(@Nonnull GameComponent component);
 
     void removeComponent(@Nonnull GameComponent component);
 
+    @Nullable <T> T getComponent(@Nonnull Class<T> type);
+
+    @Nullable <T> T getComponentExact(@Nonnull Class<T> type);
+
+    boolean hasComponents();
+
     List<GameComponent> getComponents();
 
     World getWorld();
+
+    void setWorld(@Nonnull World world);
 
 }

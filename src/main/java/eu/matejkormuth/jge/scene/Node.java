@@ -24,30 +24,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge;
+package eu.matejkormuth.jge.scene;
+
+import eu.matejkormuth.jge.Drawable;
+import eu.matejkormuth.jge.Named;
+import eu.matejkormuth.jge.Updatable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.vecmath.Vector3f;
+import java.util.List;
 
-public abstract class AbstractComponent implements GameComponent {
+public interface Node extends Named, Updatable, Drawable {
 
-    private GameObject object;
+    void addChild(@Nonnull Node node);
 
-    /**
-     * Whether the update method has been implemented.
-     */
-    public boolean updateImplemented = true;
+    void removeChild(@Nonnull Node node);
 
-    public void setObject(@Nonnull GameObject object) {
-        this.object = object;
-    }
+    Node getChild(@Nonnull String name);
 
-    @Override
-    public GameObject getObject() {
-        return object;
-    }
+    boolean hasChild(@Nonnull String name);
 
-    @Override
-    public void update(float deltaTime) {
-        updateImplemented = false;
-    }
+    int getChildrenCount();
+
+    Vector3f getPosition();
+
+    Vector3f getScale();
+
+    Vector3f getRotation();
+
+    void setPosition(@Nonnull Vector3f position);
+
+    void setRotation(@Nonnull Vector3f rotation);
+
+    void setScale(@Nonnull Vector3f scale);
+
+    List<Node> getChildren();
+
+    @Nullable Node getParent();
+
+    void setParent(Node node);
 }

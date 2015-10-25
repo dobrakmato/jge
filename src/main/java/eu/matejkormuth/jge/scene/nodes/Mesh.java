@@ -24,19 +24,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package eu.matejkormuth.jge.exceptions;
+package eu.matejkormuth.jge.scene.nodes;
 
-import org.lwjgl.opengl.OpenGLException;
+import eu.matejkormuth.jge.rendering.Material;
+import eu.matejkormuth.jge.rendering.gl.api.VertexArray;
+import eu.matejkormuth.jge.scene.SceneNode;
 
-/**
- * Thrown when there was error while linking a program.
- */
-public class ProgramLinkException extends OpenGLException {
+public class Mesh extends SceneNode {
 
-    public ProgramLinkException() {
-    }
+    // Model of mesh.
+    private Material material;
 
-    public ProgramLinkException(String msg) {
-        super(msg);
+    private VertexArray mesh;
+
+    @Override
+    public void draw() {
+        // Draw mesh using material.
     }
 }
